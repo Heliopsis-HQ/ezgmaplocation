@@ -1,3 +1,10 @@
+{if is_unset( $width )}
+    {def $width=500}
+{/if}
+{if is_unset( $height )}
+    {def $height=280}
+{/if}
+
 {* Make sure to normalize floats from db  *}
 {def $latitude  = $attribute.content.latitude|explode(',')|implode('.')
      $longitude = $attribute.content.longitude|explode(',')|implode('.')}
@@ -30,14 +37,10 @@ function eZGmapLocation_MapView( attributeId, latitude, longitude )
 
 {if $attribute.has_content}
 <script type="text/javascript">
-<!--
-
 if ( window.addEventListener )
     window.addEventListener('load', function(){ldelim} eZGmapLocation_MapView( {$attribute.id}, {first_set( $latitude, '0.0')}, {first_set( $longitude, '0.0')} ) {rdelim}, false);
 else if ( window.attachEvent )
     window.attachEvent('onload', function(){ldelim} eZGmapLocation_MapView( {$attribute.id}, {first_set( $latitude, '0.0')}, {first_set( $longitude, '0.0')} ) {rdelim} );
-
--->
 </script>
 
 <div class="block">
@@ -49,5 +52,5 @@ else if ( window.attachEvent )
 </div>
 
 <label>{'Map'|i18n('extension/ezgmaplocation/datatype')}:</label>
-<div id="ezgml-map-{$attribute.id}" style="width: 500px; height: 280px;"></div>
+<div id="ezgml-map-{$attribute.id}" style="width: {$width}px; height: {$height}px;"></div>
 {/if}
